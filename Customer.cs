@@ -3,216 +3,127 @@ using System.Collections;
 
 public class Customer : MonoBehaviour {
 
-	private Vector3 dest_pos;
-	private Vector3 first_pos;
-	private Quaternion temp_rotation;
-	//private float num=10000;
-	
-	//private int nextTime;
-
-	public float speed = 1.0F;
-	private float startTime;
-	private float journeyLength;
-
-	private int state;
-		//0: before_buy
-		//1: buying
-		//2: after_buy
-
-
 	private GameObject Object_Item;
 
-	private bool buy_ready;
+	private Vector3 src_pos;
+	private Vector3 dst_pos;
 
-	private bool Buyed;
+	private int state;
+
+	private bool move_init;
+	private float start_time;
+	public  float distance_time;
+	private float t;
 
 	// Use this for initialization
 	void Start () {
-
-		state=0;
-
-		Move_Init();
-
-		//Select the item to purchase
+		state = 0;
+		move_init = false;
 		Object_Item = Select_Item();
-
-		buy_ready = false;
-
-		Buyed = true;
+		animation.Play ("Walk"); //Check Anime (1/3)
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
 		switch(state)
 		{
-			case 0: //before_buy
-
-				Move(first_pos, dest_pos);
-				break;
-
-			case 1: //arrived & buying
+			case 0: //go to the desk
 			{
-				//print(Object_Item);
-				if(buy_ready)
-					Buy(Object_Item);
+				Move();
 				break;
 			}
-
-			case 2:	//after_buy
-
-				Move(first_pos, dest_pos);
-				
+			case 1: //arrived to the desk
+			{
+				Buy();
+				break;
+			}
+			case 2: //go to the exit
+			{
+				Move();
+				break;
+			}
+			case 3:
+			{
 				Exit();
 				break;
-
+			}
 		}
-
-
-		/*
-		if(Input.GetMouseButtonDown(0))
-		{
-			//animation.Stop(animation.clip.name);
-			//animation.Stop("Stand");
-			animation.Play (animation.clip.name);
-			//Debug.Log ("Play");
-			//Debug.Log (animation.GetClipCount());
-			Debug.Log (animation.clip.name);
-		}
-		else if(Input.GetMouseButtonDown(1))
-		{
-			animation.Play ("Walk");
-			Debug.Log ("Walk");
-		}
-
-		if(this.transform.position != dest_pos)//if(Input.GetMouseButtonDown(0))
-		{
-		//Debug.Log ((dest - this.transform.position)/10);
-		//while(this.transform.position != dest)
-		temp_rotation = this.transform.rotation;
-		this.transform.rotation = Quaternion.identity;//.Euler(0,90,0);
-		//Debug.Log (Quaternion.identity);
-		//Debug.Break();
-		
-		//this.transform.Translate((dest - this.transform.position)/100);
-		////Debug.Log (dest - this.transform.position);
-		//this.transform.Translate(dest - this.transform.position);
-		for(int i=0;i<num;i++)
-		{
-			//if(Mathf.FloorToInt(Time.time) >= nextTime)
-			//{
-				this.transform.Translate((dest_pos - first_pos)/num);
-				//nextTime++;
-			//}
-		}
-		//this.transform.Tran
-		
-		this.transform.rotation = temp_rotation;
-		}
-		*/
 	}
-	
+
 	GameObject Select_Item()
 	{
 		GameObject[] Object_Item = GameObject.FindGameObjectsWithTag("Item");
-		
-		//Debug.Log (Object_Item.Length);
-		//Debug.Break();
-
-		return Object_Item[Random.Range(0,Object_Item.Length)];
-	}
-
-	void Move_Init()
-	{
-		dest_pos = new Vector3 (0,6,5);
-		first_pos = this.transform.position;
-		//nextTime = 1;
-		
-		startTime = Time.time;
-		journeyLength = Vector3.Distance(first_pos, dest_pos);
-		
-		if(first_pos != dest_pos)
-		{
-			//if(Buyed)
-				animation.Play ("Walk");
-			//else
-			//	animation.Play ("Oops");
-		}
-
-
-
-	}
-
-	void Move(Vector3 param_src,Vector3 param_dest)
-	{
-		float distCovered = (Time.time - startTime) * speed;
-		float fracJourney = distCovered / journeyLength;
-		this.transform.position = Vector3.Lerp(param_src, param_dest, fracJourney);
-
-		if(this.transform.position == dest_pos)
-		{
-			animation.Play ("Stand");
-			this.transform.rotation = Quaternion.Euler(0,90,0);
-			state++; // go to buying state
-
-			//print("Stand");
-			StartCoroutine(Stand_To_Buy());
-		}
-	}
-
-	void Change_Position(Vector3 param_first_pos, Vector3 param_dest_pos)
-	{
-		first_pos = param_first_pos;
-		dest_pos = param_dest_pos;
-
-		startTime = Time.time;
-		journeyLength = Vector3.Distance(first_pos, dest_pos);
-	}
-
-	IEnumerator Stand_To_Buy()
-	{
-		//print("Check : "+Object_Item);
-		if(Object_Item)
-		{
-			//print("Check");
-			yield return new WaitForSeconds(0.3f);
-			Gui.exists = false;
-			Gui.gold += 7;
-			Buyed = true;
-		}
-		//else
-
-		buy_ready = true;
-	}
-
-	void Buy(GameObject Object_Item)
-	{
-		//print("Buying");
-		//Gold++
-
-		//print(Object_Item);
-		Destroy(Object_Item);
-//		print(Object_Item);
-
-		state = 2;
-		Change_Position(this.transform.position, new Vector3 (25,6,5));
-		//Debug.Log(first_pos);
-		//Debug.Log(dest_pos);
-		//Debug.Break ();
-
-		if(Object_Item)
-			animation.Play ("Walk");
-		else
-			animation.Play("Oops");
-		this.transform.rotation = Quaternion.Euler (0,0,0);
-	}
-
-	void Exit()
-	{
-		if(this.transform.position == dest_pos)
+		//print (Object_Item.Length);
+		int Item_Index = Random.Range(0,Object_Item.Length); //exception point (out of range)
+		//print (Object_Item[Item_Index]);
+		if (Object_Item[Item_Index] == null)
 		{
 			Destroy(this.gameObject);
-			Customer_Spawn.customer_count--;
+			return null;
 		}
+		else
+			return Object_Item[Item_Index];
+	}
+	
+	void Move()
+	{
+		if(move_init == false)
+		{
+			src_pos = this.transform.position;
+			start_time = Time.time;
+			switch(state)
+			{
+				case 0: //go to the desk
+				{
+					dst_pos = new Vector3(0,6,5);//desk;
+					break;
+				}
+				case 2: //go to the exit
+				{
+					dst_pos = new Vector3 (25,6,5);//exit;
+					break;
+				}
+			}
+			move_init = true;
+		}
+		else
+		{
+			t = (Time.time - start_time)/distance_time;
+			//print(t);
+			//print (src_pos);
+			//print (dst_pos);
+			//Debug.Break ();
+			this.transform.position = Vector3.Lerp(src_pos, dst_pos, t);
+			if(t >= 1)
+			{
+				move_init = false;
+				state++;
+				//print(state);
+				//Debug.Break();
+			}
+		}
+	}
+	
+	void Buy()
+	{
+		print(Object_Item);
+		if(Object_Item)
+		{
+			Destroy(Object_Item);
+			Gui.exists = false;
+			Gui.gold += 7;
+			animation.Play ("Walk"); //Check Anime(2/3)
+		}
+		else
+			animation.Play("Oops"); //Check Anime (3/3)
+
+		this.transform.rotation = Quaternion.Euler (0,0,0);
+		state++;
+	}
+	
+	void Exit()
+	{
+		Destroy(this.gameObject);
+		Customer_Spawn.customer_count--;
 	}
 }
