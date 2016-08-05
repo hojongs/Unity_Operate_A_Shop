@@ -52,17 +52,19 @@ public class Customer : MonoBehaviour {
 
 	GameObject Select_Item()
 	{
-		GameObject[] Object_Item = GameObject.FindGameObjectsWithTag("Item");
-		//print (Object_Item.Length);
-		int Item_Index = Random.Range(0,Object_Item.Length); //exception point (out of range)
+		GameObject Object_Item = Button.Item_list[0];//GameObject.FindGameObjectsWithTag("Item");
+		//print (Object_Item);
+
+		//int Item_Index = Random.Range(0,Object_Item.Length); //exception point (out of range)
 		//print (Object_Item[Item_Index]);
-		if (Object_Item[Item_Index] == null)
+		if (Object_Item == null)//if (Object_Item[Item_Index] == null)
 		{
 			Destroy(this.gameObject);
 			return null;
 		}
 		else
-			return Object_Item[Item_Index];
+			return Object_Item;
+			//return Object_Item[Item_Index];
 	}
 	
 	void Move()
@@ -106,12 +108,12 @@ public class Customer : MonoBehaviour {
 	
 	void Buy()
 	{
-		print(Object_Item);
+		//print(Object_Item);
 		if(Object_Item)
 		{
 			Destroy(Object_Item);
-			Gui.exists = false;
-			Gui.gold += 7;
+			//Button.exists = false;
+			Button.gold += 7;
 			animation.Play ("Walk"); //Check Anime(2/3)
 		}
 		else
