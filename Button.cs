@@ -5,7 +5,7 @@ public class Button : MonoBehaviour {
 
 	public GameObject portion;
 	public static int gold;
-	public int exists_MAX;
+	public static int exists_MAX = 6;
 
 	public static GameObject[] Item_list;
 
@@ -19,7 +19,7 @@ public class Button : MonoBehaviour {
 
 		Button.gold = 20;
 
-		Button.Item_list = new GameObject[11];
+		Button.Item_list = new GameObject[exists_MAX];
 	}
 	
 	// Update is called once per frame
@@ -66,7 +66,7 @@ public class Button : MonoBehaviour {
 
 	Vector3 GetEmpty()
 	{
-		for(int i=0;i<6;i++)
+		for(int i=0;i<exists_MAX;i++)
 		{
 			if(GetExists(i) == 1) //Item dont exists
 			{
@@ -76,7 +76,7 @@ public class Button : MonoBehaviour {
 		return Vector3.zero;
 	}
 
-	int GetExists(int index)
+	static int GetExists(int index)
 	{
 		//print("index : "+index);
 		//print("Value : "+Button.Item_list[index]);
@@ -84,6 +84,21 @@ public class Button : MonoBehaviour {
 			return 0; //Item exists
 		else
 			return 1; //Item dont exists
+	}
+
+	public static int randomExists()
+	{
+		int rand;
+		int exists;
+
+		while(true)
+		{
+			rand = Random.Range (0,Button.exists_MAX);
+			exists = Button.GetExists(rand);
+
+			if (exists == 0)
+				return rand;
+		}
 	}
 
 	/*

@@ -52,8 +52,11 @@ public class Customer : MonoBehaviour {
 
 	GameObject Select_Item()
 	{
-		GameObject Object_Item = Button.Item_list[0];//GameObject.FindGameObjectsWithTag("Item");
+		int rand = Button.randomExists();
+		print (rand);
+		GameObject Object_Item = Button.Item_list[rand];//GameObject.FindGameObjectsWithTag("Item");
 		//print (Object_Item);
+
 
 		//int Item_Index = Random.Range(0,Object_Item.Length); //exception point (out of range)
 		//print (Object_Item[Item_Index]);
