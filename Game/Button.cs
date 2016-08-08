@@ -52,7 +52,7 @@ public class Button : MonoBehaviour {
 	
 				Button.gold -= 5;
 	
-				Button.Item_list[Mathf.FloorToInt((Empty.x + 5)/2)] = (GameObject) GameObject.Instantiate(portion, Empty, Quaternion.identity);
+				Button.Item_list[Mathf.FloorToInt((Empty.x + 5)/2f)] = (GameObject) GameObject.Instantiate(portion, Empty, Quaternion.identity);
 			}
 		}
 		
@@ -68,7 +68,7 @@ public class Button : MonoBehaviour {
 	{
 		for(int i=0;i<exists_MAX;i++)
 		{
-			if(GetExists(i) == 1) //Item dont exists
+			if(Button.GetExists(i) == 1) //Item dont exists
 			{
 				return new Vector3(-5+i*2, 5.5f, 0);
 			}
