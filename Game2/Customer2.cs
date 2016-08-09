@@ -5,10 +5,7 @@ using System.Collections.Generic;
 public class Customer2 : MonoBehaviour {
 
 	//private GameObject Object_Item;
-	int[] temp;
 	Dictionary<string, int> Object_Index;
-	Desk_Slot desk;
-	Item_Slot item;
 
 	private Vector3 src_pos;
 	private Vector3 dst_pos;
@@ -30,13 +27,7 @@ public class Customer2 : MonoBehaviour {
 		state = 0;
 		move_init = false;
 		//Object_Item = Select_Item();
-		temp = Object_Management.Select_Item();
-		Object_Index = new Dictionary<string, int>();
-		Object_Index.Add ("desk", temp[0]);
-		Object_Index.Add ("item", temp[1]);
-
-		desk = Object_Management.GetDesk(Object_Index["desk"]);
-		item = desk.GetItemList()[Object_Index["item"]];
+		Object_Index = Object_Management.Select_Item();
 
 		//Debug.Log (Object_Index[0]);
 		//Debug.Log (Object_Index[1]);
@@ -104,16 +95,14 @@ public class Customer2 : MonoBehaviour {
 			{
 			case 0: //go to the desk
 			{
-				Transform desk_tr = desk.GetTransform();
 				//dst_pos = Order.GetDeskspace(desk_pos).desk_obj.transform.position + new Vector3 (0,0.5f,2);//desk;
-				dst_pos = desk.GetPosition() + desk_tr.forward * 10;
-				dst_pos.y = 9;
+				dst_pos = Object_Management.GetDeskForward(Object_Index["desk"]);
 				Debug.Log (dst_pos);
 				break;
 			}
 			case 2: //go to the exit
 			{
-				dst_pos = new Vector3 (50,1,5);//exit;
+				dst_pos = new Vector3 (50,9,5);//exit;
 				break;
 			}
 			}
@@ -139,7 +128,7 @@ public class Customer2 : MonoBehaviour {
 	
 	void Buy()
 	{
-		desk.DecreaseItemCount();
+		//desk.DecreaseItemCount();
 		//item.BuyItem();
 
 		/*

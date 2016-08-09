@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Desk_Slot {
 	Vector3 position;
@@ -18,9 +19,9 @@ public class Desk_Slot {
 	}
 
 	//Get Methods
-	public Transform GetTransform()
+	public Vector3 _GetDeskForward()
 	{
-		return this.obj.transform;
+		return this.obj.transform.forward * 13;
 	}
 	public Vector3 GetPosition()
 	{
@@ -111,5 +112,20 @@ public class Desk_Slot {
 		}
 
 		return result;
+	}
+
+	public int _Select_Item()
+	{
+		List<int> random_list = new List<int>();
+		for(int j=0;j<item_list.Length;j++)
+		{
+			if(item_list[j].GetInUse() == true)
+				random_list.Add(j);
+		}
+		int pick2 = random_list[Random.Range(0,random_list.Count)];
+		//Debug.Log (random_list2.Count);
+		//Debug.Break ();
+
+		return pick2;
 	}
 }

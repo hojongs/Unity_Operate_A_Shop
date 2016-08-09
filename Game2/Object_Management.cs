@@ -19,9 +19,12 @@ public class Object_Management {
 		return true;
 	}
 
-	public static Desk_Slot GetDesk(int index)
+	public static Vector3 GetDeskForward(int index)
 	{
-		return Object_Management.desk_list[index];
+		Desk_Slot target = desk_list[index];
+		Vector3 result = target.GetPosition() + target._GetDeskForward();
+		result.y = 9;
+		return result;
 	}
 
 	public static int OrderDesk(string desk_name)
@@ -77,7 +80,7 @@ public class Object_Management {
 
 		return result;
 	}
-	public static int[] Select_Item()
+	public static Dictionary<string,int> Select_Item()
 	{
 		List<int> random_list = new List<int>();
 		for(int i=0;i<desk_list_length;i++)
@@ -90,18 +93,13 @@ public class Object_Management {
 		int pick = random_list[Random.Range(0,random_list.Count)];
 		//Debug.Log (random_list.Count);
 
-		
-		Item_Slot[] item_list = desk_list[pick].GetItemList();
-		List<int> random_list2 = new List<int>();
-		for(int j=0;j<item_list.Length;j++)
-		{
-			if(item_list[j].GetInUse() == true)
-				random_list2.Add(j);
-		}
-		int pick2 = random_list2[Random.Range(0,random_list2.Count)];
-		//Debug.Log (random_list2.Count);
-		//Debug.Break ();
+		Dictionary<string,int> result = new Dictionary<string, int>();
+		result.Add("desk", pick);
 
-		return new int[] {pick,pick2};
+		int pick2 = desk_list[pick]._Select_Item();
+
+		result.Add ("item", pick2);
+
+		return result;
 	}
 }
