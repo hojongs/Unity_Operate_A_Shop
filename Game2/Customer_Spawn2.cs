@@ -26,8 +26,10 @@ public class Customer_Spawn2 : MonoBehaviour {
 		//Debug.Log (Time.time);
 
 		//Debug.Log (Mathf.FloorToInt(Time.time));
-		if(time() && Customer_Spawn2.customer_count < customer_MAX && Order.GetItemCount() > 0) // && Button.exists // if item exists
+		if(time() && Customer_Spawn2.customer_count < customer_MAX && Object_Management.GetTotalItemCount() > 0) //Order.GetItemCount() > 0) // && Button.exists // if item exists
 		{
+			//Debug.Log (Object_Management.GetTotalItemCount());
+			//Debug.Break ();
 			//Debug.Log("Spawn is Ready");
 			if(rand())
 			{

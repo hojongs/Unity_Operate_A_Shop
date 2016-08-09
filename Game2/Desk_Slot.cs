@@ -8,14 +8,20 @@ public class Desk_Slot {
 
 	int item_max;
 	Item_Slot[] item_list;
+	int item_count;
 
 	public Desk_Slot(Vector3 pos)
 	{
 		this.position = pos;
 		this.in_use = false;
+		this.item_count = 0;
 	}
 
 	//Get Methods
+	public Transform GetTransform()
+	{
+		return this.obj.transform;
+	}
 	public Vector3 GetPosition()
 	{
 		return this.position;
@@ -32,7 +38,12 @@ public class Desk_Slot {
 	{
 		return this.item_list;
 	}
+	public int GetItemCount()
+	{
+		return this.item_count;
+	}
 
+	//Use/FreeDeskSlot
 	public bool UseDeskSlot(string desk_name)
 	{
 		this.in_use = true;
@@ -47,6 +58,12 @@ public class Desk_Slot {
 
 			this.item_max = 6;
 			this.item_list = new Item_Slot[item_max];
+			for(int i=0;i<this.item_max;i++)
+			{
+				Transform obj_tr = this.obj.transform;
+				Vector3 item_pos = obj_tr.position + (obj_tr.right * -10) + (obj_tr.transform.right * i * 4) + (obj_tr.up * 6);
+				this.item_list[i] = new Item_Slot(item_pos);
+			}
 			
 			break;
 		}
@@ -64,23 +81,35 @@ public class Desk_Slot {
 		return true;
 	}
 
-	public bool OrderItem()
+	//ItemCount
+	public bool IncreaseItemCount()
 	{
-		int num = -1;
+		this.item_count++;
+		return true;
+	}
+	public bool DecreaseItemCount()
+	{
+		this.item_count--;
+		return true;
+	}
 
-		for (int i=0;i<this.item_max;i++)
+	public int _OrderItem(string item_name)
+	{
+		int result = 1; //all item slot is using
+
+		for(int j=0;j<item_list.Length;j++)
 		{
-			if(item_list[i].GetInUse() == false)
+			if(item_list[j].GetInUse() == false)
 			{
-				num = i;
+				//itemslot_num = j;
+				if(item_list[j].UseItemSlot(item_name) == true)
+					result = 0;
+				else
+					result = -2; //invalid item name
 				break;
 			}
 		}
 
-		return true;
-	}
-	public bool BuyItem()
-	{
-		return true;
+		return result;
 	}
 }

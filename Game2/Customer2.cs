@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Customer2 : MonoBehaviour {
 
-	private GameObject Object_Item;
+	//private GameObject Object_Item;
+	int[] temp;
+	Dictionary<string, int> Object_Index;
+	Desk_Slot desk;
+	Item_Slot item;
 
 	private Vector3 src_pos;
 	private Vector3 dst_pos;
@@ -20,11 +25,21 @@ public class Customer2 : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(Order.GetItemCount()<=0)
-			Destroy(this.gameObject);
+		//if(Order.GetItemCount()<=0)
+		//	Destroy(this.gameObject);
 		state = 0;
 		move_init = false;
-		Object_Item = Select_Item();
+		//Object_Item = Select_Item();
+		temp = Object_Management.Select_Item();
+		Object_Index = new Dictionary<string, int>();
+		Object_Index.Add ("desk", temp[0]);
+		Object_Index.Add ("item", temp[1]);
+
+		desk = Object_Management.GetDesk(Object_Index["desk"]);
+		item = desk.GetItemList()[Object_Index["item"]];
+
+		//Debug.Log (Object_Index[0]);
+		//Debug.Log (Object_Index[1]);
 		animation.Play ("Walk"); //Check Anime (1/3)
 	}
 	
@@ -87,16 +102,20 @@ public class Customer2 : MonoBehaviour {
 			start_time = Time.time;
 			switch(state)
 			{
-				case 0: //go to the desk
-				{
-					dst_pos = Order.GetDeskspace(desk_pos).desk_obj.transform.position + new Vector3 (0,0.5f,2);//desk;
-					break;
-				}
-				case 2: //go to the exit
-				{
-					dst_pos = new Vector3 (50,1,5);//exit;
-					break;
-				}
+			case 0: //go to the desk
+			{
+				Transform desk_tr = desk.GetTransform();
+				//dst_pos = Order.GetDeskspace(desk_pos).desk_obj.transform.position + new Vector3 (0,0.5f,2);//desk;
+				dst_pos = desk.GetPosition() + desk_tr.forward * 10;
+				dst_pos.y = 9;
+				Debug.Log (dst_pos);
+				break;
+			}
+			case 2: //go to the exit
+			{
+				dst_pos = new Vector3 (50,1,5);//exit;
+				break;
+			}
 			}
 			move_init = true;
 		}
@@ -120,6 +139,10 @@ public class Customer2 : MonoBehaviour {
 	
 	void Buy()
 	{
+		desk.DecreaseItemCount();
+		//item.BuyItem();
+
+		/*
 		//print(Object_Item);
 		if(Object_Item)
 		{
@@ -143,6 +166,7 @@ public class Customer2 : MonoBehaviour {
 
 		this.transform.rotation = Quaternion.Euler (0,0,0);
 		state++;
+		*/
 	}
 	
 	void Exit()

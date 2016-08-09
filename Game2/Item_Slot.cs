@@ -9,6 +9,12 @@ public class Item_Slot {
 	int order_price;
 	int buy_price;
 
+	public Item_Slot(Vector3 item_pos)
+	{
+		this.position = item_pos;
+		this.in_use = false;
+	}
+
 	public Vector3 GetPosition()
 	{
 		return this.position;
@@ -30,5 +36,29 @@ public class Item_Slot {
 		return this.buy_price;
 	}
 
+	public bool UseItemSlot(string item_name)
+	{
+		this.in_use = true;
+		
+		GameObject obj = (GameObject) Resources.LoadAssetAtPath("Assets/Prefabs/Game2/"+item_name+"_Prefab.prefab", typeof(GameObject));
 
+		switch(item_name)
+		{
+		case "Portion":
+		{
+			this.obj = (GameObject)GameObject.Instantiate (obj, this.position, Quaternion.identity);
+
+			this.order_price = 5;
+			this.buy_price = 7;
+
+			break;
+		}
+		default:
+		{
+			return false;
+		}
+		}
+
+		return true;
+	}
 }

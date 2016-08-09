@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Gui : MonoBehaviour {
+public class Order_Button : MonoBehaviour {
 
 	int bt_width, bt_height;
 	//Dictionary
@@ -30,6 +30,22 @@ public class Gui : MonoBehaviour {
 		                        this.bt_width, 
 		                        this.bt_height), "Portion"))
 		{
+			int result = Object_Management.OrderItem("Portion");
+
+			if (result == 0)
+				audio.Play ();
+			else if (result == 1)
+				Debug.Log ("All Item Slot is using");
+			else if (result == 2)
+				Debug.Log ("There is not a Desk");
+			else if (result == -1)
+				Debug.Log ("Error Occured");
+			else if (result == -2)
+				Debug.Log ("Invalid Item Name");
+				
+			
+
+			/*
 			if(Money_Management.GetGold()>=Order.GetPrice(0) && Order.meth_Item_Order("Portion"))
 			{
 				audio.Play();
@@ -38,6 +54,7 @@ public class Gui : MonoBehaviour {
 			{
 				print("Not Enough Money");
 			}
+			*/
 		}
 
 		if(GUI.Button (new Rect(10+this.bt_width, 
@@ -45,9 +62,9 @@ public class Gui : MonoBehaviour {
 		                        this.bt_width,
 		                        this.bt_height), "Basic_Desk"))
 		{
-			int result = Desk_Management.OrderDesk("Basic_Desk");
+			int result = Object_Management.OrderDesk("Basic_Desk");
 			if(result == 1)
-				Debug.Log ("Desk Slot is all using");
+				Debug.Log ("All Desk Slot is using");
 			else if(result == -1)
 				Debug.Log ("Error Occured");
 			else if(result == 0) //success
