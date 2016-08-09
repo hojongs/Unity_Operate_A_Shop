@@ -43,6 +43,9 @@ public class Order_Button : MonoBehaviour {
 			case 2:
 				Debug.Log ("There is not a Desk");
 				break;
+			case 3:
+				Debug.Log ("Not Enough Money");
+				break;
 			case -2:
 				Debug.Log ("Invalid Item Name");
 				break;
@@ -75,6 +78,9 @@ public class Order_Button : MonoBehaviour {
 				break;
 			case 1:
 				Debug.Log ("All Desk Slot is using");
+				break;
+			case 3:
+				Debug.Log ("Not Enough Money");
 				break;
 			case -1:
 				Debug.Log ("Error Occured");

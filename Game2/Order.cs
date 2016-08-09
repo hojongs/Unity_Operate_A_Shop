@@ -108,7 +108,7 @@ public class Order{
 		{
 			//Debug.Log("Ordered Portion");
 			Order.desk_space[instant_index[0]].item_obj[instant_index[1]] = (GameObject) GameObject.Instantiate (GetPrefab(item_name), pos, Quaternion.identity);
-			Money_Management.SetGold(-5);
+			//Money_Management.SetGold(-5);
 			break;
 		}
 		}

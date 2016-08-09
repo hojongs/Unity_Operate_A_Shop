@@ -6,6 +6,9 @@ public class Object_Management {
 	static Desk_Slot[] desk_list;
 	static int desk_list_length;
 
+	static Dictionary<string, ItemPrice> item_type_list;
+	//static int item_type_count;
+
 	public static bool Object_Management_Init()
 	{
 		desk_list_length = 3;
@@ -15,6 +18,10 @@ public class Object_Management {
 		{
 			desk_list[i] = new Desk_Slot(new Vector3(45*(i-1), 5, 0));
 		}
+
+
+		item_type_list = new Dictionary<string, ItemPrice>();
+		item_type_list.Add ("Portion", new ItemPrice(-5,7));
 
 		return true;
 	}
@@ -51,7 +58,17 @@ public class Object_Management {
 
 	public static int OrderItem(string item_name)
 	{
-		int result = 2; //there is not available desk
+		int result; 
+		int order_price = Object_Management.item_type_list[item_name].GetOrderPrice();
+
+		if(Gold.GetGold() + order_price < 0)
+		{
+			result = 3;
+			return result;
+		}
+
+		result = 2; //there is not available desk
+
 		for (int i=0;i<Object_Management.desk_list_length;i++)
 		{
 			if(desk_list[i].GetInUse() == true)
@@ -59,14 +76,14 @@ public class Object_Management {
 				result = desk_list[i]._OrderItem(item_name);
 				if(result == 0)
 				{
-					desk_list[i].IncreaseItemCount();
+					Gold.AddGold(order_price);
 					//Debug.Log (desk_list[i].GetItemCount());
 					break; //success
 				}
 			}
 		}
 
-		return result; //fail
+		return result;
 	}
 
 	public static int GetTotalItemCount()
@@ -75,7 +92,9 @@ public class Object_Management {
 
 		for (int i=0;i<desk_list_length;i++)
 		{
-			result+= desk_list[i].GetItemCount();
+			if(desk_list[i].GetInUse() == true)
+				result+= desk_list[i].GetItemCount();
+			//Debug.Log (i + " : " + desk_list[i].GetItemCount());
 		}
 
 		return result;
@@ -111,7 +130,12 @@ public class Object_Management {
 		if(desk_list[desk_index].GetInUse() == true)
 		{
 			if(desk_list[desk_index]._BuyItem(index["item"]) == true)
+			{
+				string item_name = desk_list[desk_index].GetItemName(index["item"]);
+				int buy_price = Object_Management.item_type_list[item_name].GetBuyPrice();
+				Gold.AddGold(buy_price);
 				result = 0;
+			}
 			else
 				result = 1; //Sold out
 		}

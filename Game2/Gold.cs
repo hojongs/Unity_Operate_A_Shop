@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Money_Management : MonoBehaviour {
+public class Gold : MonoBehaviour {
 
 	//List<int> mylist;
 	static int gold;
@@ -12,24 +12,22 @@ public class Money_Management : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(Money_Management.InitGold() == false) {};
 		this.gold_width = 100;
 		this.gold_height = 50;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+		if(InitGold() == false)
+			Debug.Log ("Error Occured");
+
 	}
 
 	void OnGUI()
 	{
-		GUI.Button(new Rect(Screen.width-gold_width, Screen.height-gold_height, gold_width, gold_height), "Gold : "+Money_Management.GetGold().ToString());
+		GUI.Button(new Rect(Screen.width-gold_width, Screen.height-gold_height, gold_width, gold_height), "Gold : "+Gold.GetGold().ToString());
 	}
 
 	static bool InitGold()
 	{
-		Money_Management.gold = init_gold;
+		Gold.gold = init_gold;
 		return true;
 	}
 
@@ -38,7 +36,7 @@ public class Money_Management : MonoBehaviour {
 		return gold;
 	}
 
-	public static bool SetGold(int value)
+	public static bool AddGold(int value)
 	{
 		gold += value;
 		return true;

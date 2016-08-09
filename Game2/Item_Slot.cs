@@ -5,9 +5,7 @@ public class Item_Slot {
 	Vector3 position;
 	bool in_use;
 	GameObject obj;
-
-	int order_price;
-	int buy_price;
+	string item_name;
 
 	public Item_Slot(Vector3 item_pos)
 	{
@@ -21,19 +19,15 @@ public class Item_Slot {
 	}
 	public bool GetInUse()
 	{
-		return in_use;
+		return this.in_use;
 	}
 	public GameObject GetItemObject()
 	{
 		return this.obj;
 	}
-	public int GetOrderPrice()
+	public string _GetItemName()
 	{
-		return this.order_price;
-	}
-	public int GetBuyPrice()
-	{
-		return this.buy_price;
+		return this.item_name;
 	}
 
 	public bool UseItemSlot(string item_name)
@@ -48,9 +42,6 @@ public class Item_Slot {
 		{
 			this.obj = (GameObject)GameObject.Instantiate (obj, this.position, Quaternion.identity);
 
-			this.order_price = 5;
-			this.buy_price = 7;
-
 			break;
 		}
 		default:
@@ -58,6 +49,8 @@ public class Item_Slot {
 			return false;
 		}
 		}
+
+		this.item_name = item_name;
 
 		return true;
 	}

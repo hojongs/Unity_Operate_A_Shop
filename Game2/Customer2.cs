@@ -97,7 +97,7 @@ public class Customer2 : MonoBehaviour {
 			{
 				//dst_pos = Order.GetDeskspace(desk_pos).desk_obj.transform.position + new Vector3 (0,0.5f,2);//desk;
 				dst_pos = Object_Management.GetDeskForward(Object_Index["desk"]);
-				Debug.Log (dst_pos);
+				//Debug.Log (dst_pos);
 				break;
 			}
 			case 2: //go to the exit

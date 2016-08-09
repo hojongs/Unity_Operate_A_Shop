@@ -43,6 +43,10 @@ public class Desk_Slot {
 	{
 		return this.item_count;
 	}
+	public string GetItemName(int index)
+	{
+		return this.item_list[index]._GetItemName();
+	}
 
 	//Use/FreeDeskSlot
 	public bool UseDeskSlot(string desk_name)
@@ -82,18 +86,6 @@ public class Desk_Slot {
 		return true;
 	}
 
-	//ItemCount
-	public bool IncreaseItemCount()
-	{
-		this.item_count++;
-		return true;
-	}
-	public bool DecreaseItemCount()
-	{
-		this.item_count--;
-		return true;
-	}
-
 	public int _OrderItem(string item_name)
 	{
 		int result = 1; //all item slot is using
@@ -104,7 +96,10 @@ public class Desk_Slot {
 			{
 				//itemslot_num = j;
 				if(item_list[j].UseItemSlot(item_name) == true)
+				{
+					this.item_count++;
 					result = 0;
+				}
 				else
 					result = -2; //invalid item name
 				break;
@@ -133,10 +128,11 @@ public class Desk_Slot {
 	{
 		bool result;
 
-		this.item_count--;
-
 		if(item_list[index].GetInUse() == true)
+		{
+			this.item_count--;
 			result = item_list[index].FreeItemSlot();
+		}
 		else
 			result = false;
 
