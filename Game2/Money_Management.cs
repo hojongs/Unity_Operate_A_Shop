@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Money_Management : MonoBehaviour {
 
+	//List<int> mylist;
 	static int gold;
 	int gold_width;
 	int gold_height;

@@ -43,10 +43,20 @@ public class Gui : MonoBehaviour {
 		if(GUI.Button (new Rect(10+this.bt_width, 
 		                        10, 
 		                        this.bt_width,
-		                        this.bt_height), "Desk"))
+		                        this.bt_height), "Basic_Desk"))
 		{
-			if(Order.meth_Desk_Order("Basic_Desk"))
-				audio.Play();
+			int result = Desk_Management.OrderDesk("Basic_Desk");
+			if(result == 1)
+				Debug.Log ("Desk Slot is all using");
+			else if(result == -1)
+				Debug.Log ("Error Occured");
+			else if(result == 0) //success
+				audio.Play ();
+				
+
+
+			//if(Order.meth_Desk_Order("Basic_Desk"))
+			//	audio.Play();
 			//else
 				//audio.Play();
 		}

@@ -2,20 +2,24 @@
 using System.Collections;
 
 public class Item {
-	Type type;
+	itemType type;
 	Vector3 desk_pos;
 	Vector3 item_pos; //on_desk
 	GameObject obj;
 
-	public Type GetType()
+
+
+	public itemType GetitemType()
 	{
 		return type;
 	}
-	public bool SetType(Type type)
+	/*
+	public bool SetitemType(itemType type)
 	{
 		this.type = type;
 		return true;
 	}
+	*/
 	public Vector3 GetDeskPos()
 	{
 		return desk_pos;
@@ -45,7 +49,7 @@ public class Item {
 	}
 }
 
-public class Type
+public class itemType
 {
 	int order_price;
 	int sell_price;
