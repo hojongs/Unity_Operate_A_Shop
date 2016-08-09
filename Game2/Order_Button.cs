@@ -32,16 +32,21 @@ public class Order_Button : MonoBehaviour {
 		{
 			int result = Object_Management.OrderItem("Portion");
 
-			if (result == 0)
+			switch(result)
+			{
+			case 0:
 				audio.Play ();
-			else if (result == 1)
+				break;
+			case 1:
 				Debug.Log ("All Item Slot is using");
-			else if (result == 2)
+				break;
+			case 2:
 				Debug.Log ("There is not a Desk");
-			else if (result == -1)
-				Debug.Log ("Error Occured");
-			else if (result == -2)
+				break;
+			case -2:
 				Debug.Log ("Invalid Item Name");
+				break;
+			}
 				
 			
 
@@ -63,13 +68,18 @@ public class Order_Button : MonoBehaviour {
 		                        this.bt_height), "Basic_Desk"))
 		{
 			int result = Object_Management.OrderDesk("Basic_Desk");
-			if(result == 1)
-				Debug.Log ("All Desk Slot is using");
-			else if(result == -1)
-				Debug.Log ("Error Occured");
-			else if(result == 0) //success
+			switch(result)
+			{
+			case 0: //success
 				audio.Play ();
-				
+				break;
+			case 1:
+				Debug.Log ("All Desk Slot is using");
+				break;
+			case -1:
+				Debug.Log ("Error Occured");
+				break;
+			}
 
 
 			//if(Order.meth_Desk_Order("Basic_Desk"))

@@ -128,4 +128,18 @@ public class Desk_Slot {
 
 		return pick2;
 	}
+
+	public bool _BuyItem(int index)
+	{
+		bool result;
+
+		this.item_count--;
+
+		if(item_list[index].GetInUse() == true)
+			result = item_list[index].FreeItemSlot();
+		else
+			result = false;
+
+		return result;
+	}
 }

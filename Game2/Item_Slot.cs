@@ -61,4 +61,11 @@ public class Item_Slot {
 
 		return true;
 	}
+	public bool FreeItemSlot()
+	{
+		this.in_use = false;
+		GameObject.Destroy(this.obj);
+		//gold
+		return true;
+	}
 }

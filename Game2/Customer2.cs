@@ -128,6 +128,23 @@ public class Customer2 : MonoBehaviour {
 	
 	void Buy()
 	{
+		int result = Object_Management.BuyItem(Object_Index);
+		switch(result)
+		{
+		case 0:
+			this.audio.Play();
+			break;
+		case 1:
+			Debug.Log ("Sold Out");
+			animation.Play("Oops");
+			break;
+		case 2:
+			Debug.Log ("There is not the desk");
+			animation.Play("Oops");
+			break;
+		}
+		state++;
+
 		//desk.DecreaseItemCount();
 		//item.BuyItem();
 

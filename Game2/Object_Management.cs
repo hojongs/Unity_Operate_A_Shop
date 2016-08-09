@@ -102,4 +102,22 @@ public class Object_Management {
 
 		return result;
 	}
+
+	public static int BuyItem(Dictionary<string,int> index)
+	{
+		int desk_index = index["desk"];
+		int result;
+
+		if(desk_list[desk_index].GetInUse() == true)
+		{
+			if(desk_list[desk_index]._BuyItem(index["item"]) == true)
+				result = 0;
+			else
+				result = 1; //Sold out
+		}
+		else
+			result = 2; //There is not the desk
+
+		return result;
+	}
 }
