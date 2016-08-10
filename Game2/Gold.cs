@@ -8,7 +8,7 @@ public class Gold : MonoBehaviour {
 	int gold_width;
 	int gold_height;
 
-	static int init_gold = 20;
+	static int init_gold = 25;
 
 	// Use this for initialization
 	void Start () {

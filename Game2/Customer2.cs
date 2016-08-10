@@ -102,7 +102,8 @@ public class Customer2 : MonoBehaviour {
 			}
 			case 2: //go to the exit
 			{
-				dst_pos = new Vector3 (50,9,5);//exit;
+				//dst_pos = new Vector3 (50,9,5);//exit;
+				dst_pos = new Vector3 (100,9,100);
 				break;
 			}
 			}
@@ -116,6 +117,8 @@ public class Customer2 : MonoBehaviour {
 			//print (dst_pos);
 			//Debug.Break ();
 			this.transform.position = Vector3.Lerp(src_pos, dst_pos, t);
+			this.transform.rotation = Quaternion.LookRotation(dst_pos - src_pos);
+			this.transform.Rotate (new Vector3(0,90,0));
 			if(t >= 1)
 			{
 				move_init = false;

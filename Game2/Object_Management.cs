@@ -6,7 +6,7 @@ public class Object_Management {
 	static Desk_Slot[] desk_list;
 	static int desk_list_length;
 
-	static Dictionary<string, ItemPrice> item_type_list;
+	static Dictionary<string, ItemPrice> obj_inform_list;
 	//static int item_type_count;
 
 	public static bool Object_Management_Init()
@@ -20,8 +20,13 @@ public class Object_Management {
 		}
 
 
-		item_type_list = new Dictionary<string, ItemPrice>();
-		item_type_list.Add ("Portion", new ItemPrice(-5,7));
+		obj_inform_list = new Dictionary<string, ItemPrice>();
+		//desk
+		obj_inform_list.Add ("Basic_Desk", new ItemPrice(-5,5));
+		//item
+		obj_inform_list.Add ("Portion", new ItemPrice(-5,7));
+
+
 
 		return true;
 	}
@@ -36,7 +41,15 @@ public class Object_Management {
 
 	public static int OrderDesk(string desk_name)
 	{
+		int result;
 		int num = -1;
+		int order_price = Object_Management.obj_inform_list[desk_name].GetOrderPrice();
+		
+		if(Gold.GetGold() + order_price < 0)
+		{
+			result = 3;
+			return result;
+		}
 
 		for (int i=0;i<desk_list_length;i++)
 		{
@@ -48,18 +61,23 @@ public class Object_Management {
 		}
 
 		if(num == -1)
-			return 1;
+			result = 1;
 
 		if(desk_list[num].UseDeskSlot(desk_name) == false)
-			return -1;
+			result = -1;
+		else //success
+		{
+			Gold.AddGold(order_price);
+			result = 0;
+		}
 
-		return 0;
+		return result;
 	}
 
 	public static int OrderItem(string item_name)
 	{
 		int result; 
-		int order_price = Object_Management.item_type_list[item_name].GetOrderPrice();
+		int order_price = Object_Management.obj_inform_list[item_name].GetOrderPrice();
 
 		if(Gold.GetGold() + order_price < 0)
 		{
@@ -132,7 +150,7 @@ public class Object_Management {
 			if(desk_list[desk_index]._BuyItem(index["item"]) == true)
 			{
 				string item_name = desk_list[desk_index].GetItemName(index["item"]);
-				int buy_price = Object_Management.item_type_list[item_name].GetBuyPrice();
+				int buy_price = Object_Management.obj_inform_list[item_name].GetBuyPrice();
 				Gold.AddGold(buy_price);
 				result = 0;
 			}
