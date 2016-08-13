@@ -51,6 +51,7 @@ public class Customer2 : MonoBehaviour {
 			case 2: //go to the exit
 			{
 				Move();
+				ShowText();
 				break;
 			}
 			case 3:
@@ -136,13 +137,16 @@ public class Customer2 : MonoBehaviour {
 		{
 		case 0:
 			this.audio.Play();
+			SetText("Thank you!");
 			break;
 		case 1:
 			Debug.Log ("Sold Out");
 			animation.Play("Oops");
+			SetText("Oops! There is not the item.");
 			break;
 		case 2:
 			Debug.Log ("There is not the desk");
+			SetText("Oops! There is not the item.");
 			animation.Play("Oops");
 			break;
 		}
@@ -176,6 +180,24 @@ public class Customer2 : MonoBehaviour {
 		this.transform.rotation = Quaternion.Euler (0,0,0);
 		state++;
 		*/
+	}
+
+	void SetText(string text)
+	{
+		GUIText gui_text = this.gameObject.GetComponentInChildren<GUIText>();
+
+		gui_text.text = text;
+	}
+
+	void ShowText()
+	{
+		GUIText gui_text = this.gameObject.GetComponentInChildren<GUIText>();
+		
+		Vector3 pos = Camera.main.WorldToViewportPoint(this.transform.position + Vector3.up * 15);
+
+		//pos.y += 0.2f;
+
+		gui_text.transform.position = pos;
 	}
 	
 	void Exit()
