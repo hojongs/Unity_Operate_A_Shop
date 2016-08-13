@@ -191,13 +191,18 @@ public class Customer2 : MonoBehaviour {
 
 	void ShowText()
 	{
-		GUIText gui_text = this.gameObject.GetComponentInChildren<GUIText>();
+		//print(this.gameObject.GetComponentInChildren<Renderer>());
+		//Debug.Break ();
+		if(this.gameObject.GetComponentInChildren<Renderer>().isVisible)
+		{
+			GUIText gui_text = this.gameObject.GetComponentInChildren<GUIText>();
 		
-		Vector3 pos = Camera.main.WorldToViewportPoint(this.transform.position + Vector3.up * 15);
+			Vector3 pos = Camera.main.WorldToViewportPoint(this.transform.position + Vector3.up * 15);
 
-		//pos.y += 0.2f;
+			//pos.y += 0.2f;
 
-		gui_text.transform.position = pos;
+			gui_text.transform.position = pos;
+		}
 	}
 	
 	void Exit()
