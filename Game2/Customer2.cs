@@ -20,6 +20,8 @@ public class Customer2 : MonoBehaviour {
 	int desk_pos;
 	int item_pos;
 
+	bool oops;
+
 	// Use this for initialization
 	void Start () {
 		//if(Order.GetItemCount()<=0)
@@ -28,10 +30,11 @@ public class Customer2 : MonoBehaviour {
 		move_init = false;
 		//Object_Item = Select_Item();
 		Object_Index = Object_Management.Select_Item();
+		oops = false;
 
 		//Debug.Log (Object_Index[0]);
 		//Debug.Log (Object_Index[1]);
-		animation.Play ("Walk"); //Check Anime (1/3)
+		//animation.Play ("Walk"); //Check Anime (1/3)
 	}
 	
 	// Update is called once per frame
@@ -46,7 +49,7 @@ public class Customer2 : MonoBehaviour {
 			}
 			case 1: //arrived to the desk
 			{
-				Buy();
+				StartCoroutine(WaitForBuy());
 				break;
 			}
 			case 2: //go to the exit
@@ -109,6 +112,15 @@ public class Customer2 : MonoBehaviour {
 				break;
 			}
 			}
+
+			if(oops)
+			{
+				animation.Play ("Oops");
+				SetText("Oops! There is not the item.");
+			}
+			else
+				animation.Play ("Walk");
+
 			move_init = true;
 		}
 		else
@@ -138,10 +150,19 @@ public class Customer2 : MonoBehaviour {
 		if (result == false)
 		{
 			SetText("Oops! There is not the item.");
-			animation.Play("Oops");
+			oops = true;
 			move_init = false;
 			state = 2;
 		}
+	}
+
+	IEnumerator WaitForBuy()
+	{
+		state = -1;
+		animation.Play("Stand");
+		transform.Rotate (0,90,0);
+		yield return new WaitForSeconds(0.5f);
+		Buy();
 	}
 	
 	void Buy()
@@ -155,16 +176,14 @@ public class Customer2 : MonoBehaviour {
 			break;
 		case 1:
 			Debug.Log ("Sold Out");
-			animation.Play("Oops");
-			SetText("Oops! There is not the item.");
+			oops = true;
 			break;
 		case 2:
 			Debug.Log ("There is not the desk");
-			SetText("Oops! There is not the item.");
-			animation.Play("Oops");
+			oops = true;
 			break;
 		}
-		state++;
+		state = 2;
 
 		//desk.DecreaseItemCount();
 		//item.BuyItem();

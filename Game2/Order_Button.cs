@@ -4,6 +4,8 @@ using System.Collections;
 public class Order_Button : MonoBehaviour {
 
 	int bt_width, bt_height;
+	bool message;
+	GameObject msg_box;
 	//Dictionary
 
 	// Use this for initialization
@@ -15,6 +17,9 @@ public class Order_Button : MonoBehaviour {
 		{
 			print("Order_Init Error");
 		}
+
+		message = false;
+		msg_box = GameObject.Find ("Message_Box") as GameObject;
 	}
 	
 	// Update is called once per frame
@@ -30,11 +35,11 @@ public class Order_Button : MonoBehaviour {
 		itemButton(2, "Shield");
 
 		deskButton(0, "Basic_Desk");
-
 	}
 
 	void itemButton(int pos, string item_name)
 	{
+
 		if(GUI.Button (new Rect(10,
 		                        10 + (this.bt_height + 5) * pos,
 		                        this.bt_width, 
@@ -49,15 +54,19 @@ public class Order_Button : MonoBehaviour {
 				break;
 			case 1:
 				Debug.Log ("All Item Slot is using");
+				StartCoroutine (msg_control("All Item Slot is using"));
 				break;
 			case 2:
 				Debug.Log ("There is not a Desk");
+				StartCoroutine (msg_control("There is not a Desk"));
 				break;
 			case 3:
 				Debug.Log ("Not Enough Money");
+				StartCoroutine (msg_control("Not Enough Money"));
 				break;
 			case -2:
 				Debug.Log ("Invalid Item Name");
+				StartCoroutine (msg_control("Invalid Item Name"));
 				break;
 			}
 			
@@ -106,5 +115,16 @@ public class Order_Button : MonoBehaviour {
 			//else
 			//audio.Play();
 		}
+	}
+
+	IEnumerator msg_control(string msg)
+	{
+		msg_box.audio.Play ();
+		msg_box.guiText.text = msg;
+
+		yield return new WaitForSeconds(3);
+
+		if(msg_box.guiText.text == msg)
+			msg_box.guiText.text = "";
 	}
 }
