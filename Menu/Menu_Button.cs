@@ -34,7 +34,7 @@ public class Menu_Button : MonoBehaviour {
 		if(GUI.Button(button_pos(1), "Play"))
 		{
 			Debug.Log ("Play");
-			Application.LoadLevel("Game_Scene");
+			Application.LoadLevel("Game2_Scene");
 		}
 		if(GUI.Button(button_pos(2), "Exit"))
 		{

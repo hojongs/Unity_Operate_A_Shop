@@ -51,14 +51,12 @@ public class Desk_Slot {
 	//Use/FreeDeskSlot
 	public bool UseDeskSlot(string desk_name)
 	{
-		this.in_use = true;
+		bool result;
+		GameObject obj = (GameObject) Resources.Load("Prefabs/Game2/"+desk_name+"_Prefab", typeof(GameObject));
 
-		GameObject obj = (GameObject) Resources.LoadAssetAtPath("Assets/Prefabs/Game2/"+desk_name+"_Prefab.prefab", typeof(GameObject));
-
-		switch(desk_name)
+		if(obj)
 		{
-		case "Basic_Desk":
-		{
+			this.in_use = true;
 			this.obj = (GameObject)GameObject.Instantiate (obj, this.position, Quaternion.identity);
 
 			this.item_max = 6;
@@ -69,17 +67,13 @@ public class Desk_Slot {
 				Vector3 item_pos = obj_tr.position + (obj_tr.right * -10) + (obj_tr.transform.right * i * 4) + (obj_tr.up * 6);
 				this.item_list[i] = new Item_Slot(item_pos);
 			}
-			
-			break;
-		}
-		default:
-		{
-			return false;
-		}
-		}
 
+			result = true;
+		}
+		else
+			result = false;
 
-		return true;
+		return result;
 	}
 	public bool FreeDeskSlot()
 	{
@@ -135,6 +129,15 @@ public class Desk_Slot {
 		}
 		else
 			result = false;
+
+		return result;
+	}
+
+	public bool __Check_Item(int index)
+	{
+		bool result;
+
+		result = item_list[index].GetInUse();
 
 		return result;
 	}

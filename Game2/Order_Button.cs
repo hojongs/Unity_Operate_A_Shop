@@ -25,13 +25,23 @@ public class Order_Button : MonoBehaviour {
 	
 	void OnGUI()
 	{
-		if(GUI.Button (new Rect(10,
-		                        10,
-		                        this.bt_width, 
-		                        this.bt_height), "Portion"))
-		{
-			int result = Object_Management.OrderItem("Portion");
+		itemButton(0, "Portion");
+		itemButton(1, "Sword");
+		itemButton(2, "Shield");
 
+		deskButton(0, "Basic_Desk");
+
+	}
+
+	void itemButton(int pos, string item_name)
+	{
+		if(GUI.Button (new Rect(10,
+		                        10 + (this.bt_height + 5) * pos,
+		                        this.bt_width, 
+		                        this.bt_height), item_name))
+		{
+			int result = Object_Management.OrderItem(item_name);
+			
 			switch(result)
 			{
 			case 0:
@@ -50,9 +60,9 @@ public class Order_Button : MonoBehaviour {
 				Debug.Log ("Invalid Item Name");
 				break;
 			}
-				
 			
-
+			
+			
 			/*
 			if(Money_Management.GetGold()>=Order.GetPrice(0) && Order.meth_Item_Order("Portion"))
 			{
@@ -64,13 +74,16 @@ public class Order_Button : MonoBehaviour {
 			}
 			*/
 		}
+	}
 
-		if(GUI.Button (new Rect(10+this.bt_width, 
-		                        10, 
+	void deskButton(int pos, string desk_name)
+	{
+		if(GUI.Button (new Rect(10 + this.bt_width + 10, 
+		                        10 + (this.bt_height + 5) * pos, 
 		                        this.bt_width,
-		                        this.bt_height), "Basic_Desk"))
+		                        this.bt_height), desk_name))
 		{
-			int result = Object_Management.OrderDesk("Basic_Desk");
+			int result = Object_Management.OrderDesk(desk_name);
 			switch(result)
 			{
 			case 0: //success
@@ -86,12 +99,12 @@ public class Order_Button : MonoBehaviour {
 				Debug.Log ("Error Occured");
 				break;
 			}
-
-
+			
+			
 			//if(Order.meth_Desk_Order("Basic_Desk"))
 			//	audio.Play();
 			//else
-				//audio.Play();
+			//audio.Play();
 		}
 	}
 }

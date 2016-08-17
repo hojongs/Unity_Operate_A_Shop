@@ -32,27 +32,22 @@ public class Item_Slot {
 
 	public bool UseItemSlot(string item_name)
 	{
+		bool result;
+
 		this.in_use = true;
 		
-		GameObject obj = (GameObject) Resources.LoadAssetAtPath("Assets/Prefabs/Game2/"+item_name+"_Prefab.prefab", typeof(GameObject));
+		GameObject obj = (GameObject) Resources.Load("Prefabs/Game2/"+item_name+"_Prefab", typeof(GameObject));
 
-		switch(item_name)
-		{
-		case "Portion":
+		if(obj)
 		{
 			this.obj = (GameObject)GameObject.Instantiate (obj, this.position, Quaternion.identity);
-
-			break;
+			this.item_name = item_name;
+			result = true;
 		}
-		default:
-		{
-			return false;
-		}
-		}
+		else //null
+			result = false;
 
-		this.item_name = item_name;
-
-		return true;
+		return result;
 	}
 	public bool FreeItemSlot()
 	{

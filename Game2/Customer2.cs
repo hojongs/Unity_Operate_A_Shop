@@ -41,6 +41,7 @@ public class Customer2 : MonoBehaviour {
 			case 0: //go to the desk
 			{
 				Move();
+				Check_Item();
 				break;
 			}
 			case 1: //arrived to the desk
@@ -127,6 +128,19 @@ public class Customer2 : MonoBehaviour {
 				//print(state);
 				//Debug.Break();
 			}
+		}
+	}
+
+	void Check_Item()
+	{
+		bool result = Object_Management._Check_Item(Object_Index);
+
+		if (result == false)
+		{
+			SetText("Oops! There is not the item.");
+			animation.Play("Oops");
+			move_init = false;
+			state = 2;
 		}
 	}
 	

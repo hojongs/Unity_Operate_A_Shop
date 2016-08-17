@@ -21,10 +21,12 @@ public class Object_Management {
 
 
 		obj_inform_list = new Dictionary<string, ItemPrice>();
+		//item
+		obj_inform_list.Add ("Portion", new ItemPrice(-5,5+2));
+		obj_inform_list.Add ("Sword", new ItemPrice(-10,10+4));
+		obj_inform_list.Add ("Shield", new ItemPrice(-15,51+6));
 		//desk
 		obj_inform_list.Add ("Basic_Desk", new ItemPrice(-5,5));
-		//item
-		obj_inform_list.Add ("Portion", new ItemPrice(-5,7));
 
 
 
@@ -159,6 +161,19 @@ public class Object_Management {
 		}
 		else
 			result = 2; //There is not the desk
+
+		return result;
+	}
+
+	public static bool _Check_Item(Dictionary<string,int> index)
+	{
+		int desk_index = index["desk"];
+		bool result;
+		
+		if(desk_list[desk_index].GetInUse() == true)
+			result = desk_list[desk_index].__Check_Item(index["item"]);
+		else
+			result = false; //there is not the desk
 
 		return result;
 	}
