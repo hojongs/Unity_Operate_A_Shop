@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Menu_Button : MonoBehaviour {
+public class TitleMenu_Button : MonoBehaviour {
 
 	float width_center;
 	float height_start;

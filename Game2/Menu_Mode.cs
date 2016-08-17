@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Character_Lock : MonoBehaviour {
+public class Menu_Mode : MonoBehaviour {
+	public GameObject menuboard;
 
 	// Use this for initialization
 	void Start () {
@@ -12,7 +13,7 @@ public class Character_Lock : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.E))
 		{
-			if(Screen.lockCursor)
+			if(Screen.lockCursor) //menu mode
 			{
 				//print(this.gameObject.GetComponents<MouseLook>().Length); //1
 				//print(this.gameObject.GetComponentsInChildren<MouseLook>().Length); //2
@@ -22,7 +23,7 @@ public class Character_Lock : MonoBehaviour {
 				this.GetComponent<CharacterController>().enabled = false;
 				Screen.lockCursor = false;
 			}
-			else
+			else //character control mode
 			{
 				for (int i=0;i<2;i++)
 					this.gameObject.GetComponentsInChildren<MouseLook>()[i].enabled = true;
