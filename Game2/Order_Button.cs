@@ -50,7 +50,7 @@ public class Order_Button : MonoBehaviour {
 			switch(result)
 			{
 			case 0:
-				audio.Play ();
+				GetComponent<AudioSource>().Play ();
 				break;
 			case 1:
 				Debug.Log ("All Item Slot is using");
@@ -96,7 +96,7 @@ public class Order_Button : MonoBehaviour {
 			switch(result)
 			{
 			case 0: //success
-				audio.Play ();
+				GetComponent<AudioSource>().Play ();
 				break;
 			case 1:
 				Debug.Log ("All Desk Slot is using");
@@ -119,12 +119,12 @@ public class Order_Button : MonoBehaviour {
 
 	IEnumerator msg_control(string msg)
 	{
-		msg_box.audio.Play ();
-		msg_box.guiText.text = msg;
+		msg_box.GetComponent<AudioSource>().Play ();
+		msg_box.GetComponent<GUIText>().text = msg;
 
 		yield return new WaitForSeconds(3);
 
-		if(msg_box.guiText.text == msg)
-			msg_box.guiText.text = "";
+		if(msg_box.GetComponent<GUIText>().text == msg)
+			msg_box.GetComponent<GUIText>().text = "";
 	}
 }

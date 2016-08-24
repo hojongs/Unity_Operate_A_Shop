@@ -195,7 +195,7 @@ public class Order{
 
 	static GameObject GetPrefab(string prefab_name)
 	{
-		return (GameObject) Resources.LoadAssetAtPath("Assets/Prefabs/Game2/"+prefab_name+"_Prefab.prefab", typeof(GameObject));
+        return null;//(GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Game2/"+prefab_name+"_Prefab.prefab", typeof(GameObject));
 	}
 	static bool GetDeskInUse(int index)
 	{

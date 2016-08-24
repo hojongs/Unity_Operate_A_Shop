@@ -20,7 +20,7 @@ public class Customer : MonoBehaviour {
 		state = 0;
 		move_init = false;
 		Object_Item = Select_Item();
-		animation.Play ("Walk"); //Check Anime (1/3)
+		GetComponent<Animation>().Play ("Walk"); //Check Anime (1/3)
 	}
 	
 	// Update is called once per frame
@@ -114,14 +114,14 @@ public class Customer : MonoBehaviour {
 		//print(Object_Item);
 		if(Object_Item)
 		{
-			this.audio.Play(); //sound
+			this.GetComponent<AudioSource>().Play(); //sound
 			Destroy(Object_Item);
 			//Button.exists = false;
 			Button.gold += 7;
-			animation.Play ("Walk"); //Check Anime(2/3)
+			GetComponent<Animation>().Play ("Walk"); //Check Anime(2/3)
 		}
 		else
-			animation.Play("Oops"); //Check Anime (3/3)
+			GetComponent<Animation>().Play("Oops"); //Check Anime (3/3)
 
 		this.transform.rotation = Quaternion.Euler (0,0,0);
 		state++;

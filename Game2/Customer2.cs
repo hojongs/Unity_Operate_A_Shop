@@ -115,11 +115,11 @@ public class Customer2 : MonoBehaviour {
 
 			if(oops)
 			{
-				animation.Play ("Oops");
+				GetComponent<Animation>().Play ("Oops");
 				SetText("Oops! There is not the item.");
 			}
 			else
-				animation.Play ("Walk");
+				GetComponent<Animation>().Play ("Walk");
 
 			move_init = true;
 		}
@@ -159,7 +159,7 @@ public class Customer2 : MonoBehaviour {
 	IEnumerator WaitForBuy()
 	{
 		state = -1;
-		animation.Play("Stand");
+		GetComponent<Animation>().Play("Stand");
 		transform.Rotate (0,90,0);
 		yield return new WaitForSeconds(0.5f);
 		Buy();
@@ -171,7 +171,7 @@ public class Customer2 : MonoBehaviour {
 		switch(result)
 		{
 		case 0:
-			this.audio.Play();
+			this.GetComponent<AudioSource>().Play();
 			SetText("Thank you!");
 			break;
 		case 1:
