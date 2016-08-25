@@ -23,6 +23,9 @@ public class Customer3 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (type != 0 && item.GetObject() == null)
+            Destroy(this.gameObject);
+
         height = Mathf.FloorToInt(this.transform.position.y);
         distance_time = 30;
         GetComponent<Animation>().Play("Walk");
@@ -80,9 +83,13 @@ public class Customer3 : MonoBehaviour
             {
                 case 0: //go to the item
                     {
-                        Transform tr = item.GetObject().transform;
+                        GameObject obj = item.GetObject();
+                        if (obj == null) // same time (move_init, sold out)
+                            return;
+                        Transform tr = obj.transform;
                         //dst_pos = Order.GetDeskspace(desk_pos).desk_obj.transform.position + new Vector3 (0,0.5f,2);//desk;
                         dst_pos = tr.position + tr.forward * 12;
+                        dst_pos.y = height;
                         //Debug.Log (dst_pos);
                         break;
                     }
@@ -137,8 +144,12 @@ public class Customer3 : MonoBehaviour
 
         if (obj != null)
         {
-            int price = obj.GetComponent<ItemManager>().type.price;
+            ItemType type = obj.GetComponent<ItemManager>().type;
+            float percent = 100 + type.profit;
+            //Debug.Log(type.profit);
+            int price = Mathf.FloorToInt(type.price * percent*0.01f);
             MoneyManager.AddMoney(price);
+            MoneyManager.sales += price;
             ItemManager.item_total_count--;
             Destroy(obj);
 

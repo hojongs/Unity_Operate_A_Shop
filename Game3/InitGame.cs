@@ -9,14 +9,16 @@ public class InitGame : MonoBehaviour
     {
         MenuboardManager.component.menu_on();
 
-        if (OrderButtonSpawner.OrderDeskButton_Init() == false)
+        if (ButtonSpawner.OrderDeskButton_Init() == false)
         {
             Debug.Log("Error Occured");
         }
-        if (OrderButtonSpawner.OrderItemButton_Init() == false)
+        if (ButtonSpawner.OrderItemSelectButton_Init() == false)
         {
             Debug.Log("Error Occured");
         }
+
+        ButtonSpawner.PriceButtonInit();
 
         MenuboardManager.component.menu_off();
 

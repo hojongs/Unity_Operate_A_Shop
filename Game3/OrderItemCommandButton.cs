@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OrderItemButton : MonoBehaviour
-{
-    public ItemType type;
+public class OrderItemCommandButton : MonoBehaviour {
+
+    public static ItemType type;
 
     void OnClick()
     {
+        //Debug.Log(type);
+        if (type == null)
+            return;
 
         string msg;
         switch (ItemManager.OrderItem(type))
@@ -32,6 +35,5 @@ public class OrderItemButton : MonoBehaviour
                 break;
         }
         Sound.component.GetComponent<AudioSource>().Play();
-        
     }
 }

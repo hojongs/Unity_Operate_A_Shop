@@ -12,7 +12,7 @@ public class MessageManager : MonoBehaviour {
 
     public IEnumerator printMessage(string msg)
     {
-        int sec = 1;
+        int sec = 3;
 
         UILabel component = GetComponent<UILabel>();
 

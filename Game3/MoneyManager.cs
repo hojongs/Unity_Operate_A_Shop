@@ -4,10 +4,12 @@ using System.Collections;
 public class MoneyManager : MonoBehaviour
 {
     static int money;
+    public static int sales;
     
     public static bool MoneyInit(int money)
     {
         MoneyManager.money = money;
+        sales = 0;
 
         return true;
     }

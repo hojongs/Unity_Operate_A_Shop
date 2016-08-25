@@ -6,15 +6,18 @@ public class ItemType
 {
     public string name;
     public int price;
-    public int percent;
+    public int popularity;
+    public int profit;
     public GameObject prefab;
     public List<GameObject> obj_list;
 
-    public ItemType(string name, int price, int percent, GameObject prefab)
+
+    public ItemType(string name, int price, int popularity, GameObject prefab)
     {
         this.name = name;
         this.price = price;
-        this.percent = percent;
+        this.popularity = popularity;
+        this.profit = 20;
         this.prefab = prefab;
         obj_list = new List<GameObject>();
     }
@@ -79,6 +82,11 @@ public class ItemManager : MonoBehaviour
         type.obj_list.Add(item);
 
         item_total_count++;
+
+        //for (int i = 0; i < item_slot_list.Count; i++)
+        //    Debug.Log(item_slot_list[i].GetObject());
+        //Debug.Break();
+
         //Debug.Log(item_type_list[0].obj_list.Count);
         //Debug.Log(item_type_list[0].obj_list[0]);
         //Debug.Break();
