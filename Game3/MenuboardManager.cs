@@ -5,11 +5,11 @@ public class MenuboardManager : MonoBehaviour {
     
     public GameObject menuboard;
     public GameObject character;
-    public static MenuboardManager instance;
+    public static MenuboardManager component;
 
     void Awake()
     {
-        instance = this;
+        component = this;
     }
 
     // Use this for initialization

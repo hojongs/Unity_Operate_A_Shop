@@ -7,6 +7,6 @@ public class MenuCloseButton : MonoBehaviour
 
     void OnClick()
     {
-        menuboardManager.GetComponent<MenuboardManager>().menu_off();
+        MenuboardManager.component.menu_off();
     }
 }

@@ -38,7 +38,7 @@ public class OrderButtonSpawner
         xmldoc.LoadXml(textAsset.text);
 
         /* create OrderDeskObjectButtons code */
-        GameObject panel = MenuboardManager.instance.menuboard;
+        GameObject panel = MenuboardManager.component.menuboard;
         Transform deskpanel = panel.transform.FindChild("Panel2");
         GameObject bt_prefab = (GameObject)Resources.Load("Prefabs/Game3/OrderButton_Prefab");
         GameObject label_prefab = (GameObject)Resources.Load("Prefabs/Game3/ButtonLabel_Prefab");
@@ -134,7 +134,7 @@ public class OrderButtonSpawner
 
         /* create OrderItemObjectButtons code */
 
-        GameObject panel = MenuboardManager.instance.menuboard;
+        GameObject panel = MenuboardManager.component.menuboard;
         Transform itempanel = panel.transform.FindChild("Panel1");
         Vector3 pos = new Vector3(-225, 115, 0);
         GameObject bt_prefab = (GameObject)Resources.Load("Prefabs/Game3/OrderButton_Prefab");

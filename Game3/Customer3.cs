@@ -80,8 +80,9 @@ public class Customer3 : MonoBehaviour
             {
                 case 0: //go to the item
                     {
+                        Transform tr = item.GetObject().transform;
                         //dst_pos = Order.GetDeskspace(desk_pos).desk_obj.transform.position + new Vector3 (0,0.5f,2);//desk;
-                        dst_pos = item.GetObject().transform.position;
+                        dst_pos = tr.position + tr.forward * 12;
                         //Debug.Log (dst_pos);
                         break;
                     }

@@ -7,7 +7,7 @@ public class InitGame : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        MenuboardManager.instance.menu_on();
+        MenuboardManager.component.menu_on();
 
         if (OrderButtonSpawner.OrderDeskButton_Init() == false)
         {
@@ -18,7 +18,7 @@ public class InitGame : MonoBehaviour
             Debug.Log("Error Occured");
         }
 
-        MenuboardManager.instance.menu_off();
+        MenuboardManager.component.menu_off();
 
 
         if (MoneyManager.MoneyInit(25) == false)

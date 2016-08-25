@@ -59,7 +59,7 @@ public class DeskManager : MonoBehaviour
         //desk spawn
         Vector3 pos = desk_slot_list[index].GetPos();
         GameObject desk = (GameObject)GameObject.Instantiate(prefab, pos, Quaternion.identity);
-
+        desk.AddComponent<DeskManager>();
         //insert desk to desk_slot_list
         desk_slot_list[index].SetObject(desk);
         
